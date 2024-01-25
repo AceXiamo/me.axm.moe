@@ -10,8 +10,15 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@unocss/nuxt": "^0.58.3",
     "nuxt": "^3.9.3",
+    "nuxt-icon": "^0.6.8",
+    "prettier": "^3.2.4",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@iconify-json/logos": "^1.1.42",
+    "gsap": "^3.12.5"
   }
 }
