@@ -3,5 +3,5 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@unocss/nuxt", "nuxt-icon"],
   css: ["~/assets/css/style.css"],
-  plugins: ["~/plugins/gsap.ts"],
+  plugins: ["~/plugins/gsap.ts", "~/plugins/avatar.client.ts"],
 });
