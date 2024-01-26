@@ -7,17 +7,21 @@ let avatarFromHeader: HTMLImageElement | null = null
 let avatarFromHome: HTMLImageElement | null = null
 
 const handleFromHome = (next: () => void) => {
-  avatarFromHeader = document.createElement('img')
-  avatarFromHeader.src = Avatar
-  avatarFromHeader.style.setProperty('width', '50px')
-  avatarFromHeader.style.setProperty('height', '50px')
-  avatarFromHeader.style.setProperty('border-radius', '100%')
-  avatarFromHeader?.style.setProperty('view-transition-name', 'avatar_transition')
+  createHeaderAvatar()
   document.startViewTransition(() => {
     avatarFromHome?.remove()
     headerAvatarContainer?.appendChild(avatarFromHeader!)
     next()
   })
+}
+
+const createHeaderAvatar = () => {
+  avatarFromHeader = document.createElement('img')
+  avatarFromHeader.src = Avatar
+  avatarFromHeader.style.setProperty('width', '100%')
+  avatarFromHeader.style.setProperty('height', '100%')
+  avatarFromHeader.style.setProperty('border-radius', '100%')
+  avatarFromHeader?.style.setProperty('view-transition-name', 'avatar_transition')
 }
 
 const handleBackHome = (refresh: boolean) => {
@@ -28,14 +32,16 @@ const handleBackHome = (refresh: boolean) => {
     gsap.from(avatarFromHome, {
       duration: 0.5,
       opacity: 0,
-      y: 50
+      y: 50,
     })
   } else {
     useMacroTask(() => {
-      homeAvatarContainer = document.getElementById('home_avatar_container')
-      document.startViewTransition(() => {
-        avatarFromHeader?.remove()
-        homeAvatarContainer?.appendChild(avatarFromHome!)
+      useMacroTask(() => {
+        homeAvatarContainer = document.getElementById('home_avatar_container')
+        document.startViewTransition(() => {
+          avatarFromHeader?.remove()
+          homeAvatarContainer?.appendChild(avatarFromHome!)
+        })
       })
     })
   }
@@ -45,11 +51,15 @@ const useMacroTask = (fn: () => void) => {
   setTimeout(fn, 0)
 }
 
+const useMicroTask = (fn: () => void) => {
+  Promise.resolve().then(fn)
+}
+
 const createHomeAvatar = () => {
   avatarFromHome = document.createElement('img')
   avatarFromHome.src = Avatar
-  avatarFromHome.style.setProperty('width', '150px')
-  avatarFromHome.style.setProperty('height', '150px')
+  avatarFromHome.style.setProperty('width', '100%')
+  avatarFromHome.style.setProperty('height', '100%')
   avatarFromHome.style.setProperty('border-radius', '100%')
   avatarFromHome.style.setProperty('view-transition-name', 'avatar_transition')
 }
@@ -64,9 +74,20 @@ export default defineNuxtPlugin({
       toHomePage && handleBackHome(from.path === to.path)
     })
     router.beforeEach((to, from, next) => {
-      console.log(to.path, from.path)
-      const fromHomePage = from.path === '/' && from.path !== to.path
-      fromHomePage ? handleFromHome(next) : next()
+      const refresh = from.path === to.path
+      if (refresh && to.path !== '/') {
+        createHeaderAvatar()
+        headerAvatarContainer?.appendChild(avatarFromHeader!)
+        gsap.from(avatarFromHeader, {
+          duration: 0.5,
+          opacity: 0,
+          x: -50,
+        })
+        next()
+      } else {
+        const fromHomePage = from.path === '/' && from.path !== to.path
+        fromHomePage ? handleFromHome(next) : next()
+      }
     })
   },
 })
