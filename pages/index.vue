@@ -1,13 +1,13 @@
 <template>
-  <div class="flex gap-[10px] p-[150px]">
-    <div class="flex flex-col max-w-[600px]">
+  <div class="flex gap-[10px] p-[100px_200px]">
+    <div class="flex flex-col max-w-[800px]">
+      <div  id="home_avatar_container" class="w-[100px] h-[100px] mb-[30px]"></div>
       <template v-for="(item, index) in arr" :key="index">
         <div v-gsap="getGsapConfig(index)">
           <component :is="item" />
         </div>
       </template>
     </div>
-    <div class="m-auto" id="home_avatar_container"></div>
   </div>
 </template>
 <script setup lang="tsx">
