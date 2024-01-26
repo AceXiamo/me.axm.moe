@@ -11,8 +11,7 @@
           <span class="select-none">Say</span>
         </div>
       </div>
-
-      <div class="absolute right-[50px]" id="header_avatar_container"></div>
+      <div class="absolute left-[200px] w-[50px] h-[50px]" id="header_avatar_container"></div>
     </div>
     <slot class="mt-[200px]" />
   </div>
