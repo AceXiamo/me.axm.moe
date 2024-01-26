@@ -7,23 +7,12 @@
         </div>
       </template>
     </div>
-    <div class="m-auto">
-      <img
-        v-gsap="{
-          method: 'from',
-          config: {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-          },
-        }"
-        src="https://axm.moe/avatar"
-        class="w-[150px] h-[150px] rounded-full"
-      />
-    </div>
+    <div class="m-auto" id="home_avatar_container"></div>
   </div>
 </template>
 <script setup lang="tsx">
+import Avatar from "~/assets/images/avatar.jpg";
+
 function Info_1() {
   return (
     <>
