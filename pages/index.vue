@@ -11,8 +11,6 @@
   </div>
 </template>
 <script setup lang="tsx">
-import Avatar from "~/assets/images/avatar.jpg";
-
 function Info_1() {
   return (
     <>
