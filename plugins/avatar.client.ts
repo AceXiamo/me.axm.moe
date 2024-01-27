@@ -45,11 +45,7 @@ const handleBackHome = (refresh: boolean) => {
   }
 }
 
-const MAX_RETRY = 5
-let retry = 0
 const initContainer = (hook: () => void) => {
-  if (retry > MAX_RETRY) return
-  retry++
   homeAvatarContainer = document.getElementById('home_avatar_container')
   if (homeAvatarContainer) {
     hook()
