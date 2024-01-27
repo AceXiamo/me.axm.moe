@@ -35,24 +35,33 @@ const handleBackHome = (refresh: boolean) => {
       y: 50,
     })
   } else {
-    useMacroTask(() => {
-      useMacroTask(() => {
-        homeAvatarContainer = document.getElementById('home_avatar_container')
-        document.startViewTransition(() => {
-          avatarFromHeader?.remove()
-          homeAvatarContainer?.appendChild(avatarFromHome!)
-        })
+    initContainer(() => {
+      homeAvatarContainer = document.getElementById('home_avatar_container')
+      document.startViewTransition(() => {
+        avatarFromHeader?.remove()
+        homeAvatarContainer?.appendChild(avatarFromHome!)
       })
+    })
+  }
+}
+
+const MAX_RETRY = 5
+let retry = 0
+const initContainer = (hook: () => void) => {
+  if (retry > MAX_RETRY) return
+  retry++
+  homeAvatarContainer = document.getElementById('home_avatar_container')
+  if (homeAvatarContainer) {
+    hook()
+  } else {
+    useMacroTask(() => {
+      initContainer(hook)
     })
   }
 }
 
 const useMacroTask = (fn: () => void) => {
   setTimeout(fn, 0)
-}
-
-const useMicroTask = (fn: () => void) => {
-  Promise.resolve().then(fn)
 }
 
 const createHomeAvatar = () => {
