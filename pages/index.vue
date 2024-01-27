@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-[10px] p-[100px_200px]">
     <div class="flex flex-col max-w-[800px]">
-      <div  id="home_avatar_container" class="w-[100px] h-[100px] mb-[30px]"></div>
+      <div id="home_avatar_container" class="w-[100px] h-[100px] mb-[30px]"></div>
       <template v-for="(item, index) in arr" :key="index">
         <div v-gsap="getGsapConfig(index)">
           <component :is="item" />
@@ -11,6 +11,8 @@
   </div>
 </template>
 <script setup lang="tsx">
+import gsap from 'gsap'
+
 function Info_1() {
   return (
     <>
@@ -18,7 +20,7 @@ function Info_1() {
         {"I'm `AceXiamo`, you can call me [夏末 / xiamo]."}
       </div>
     </>
-  );
+  )
 }
 
 function Info_2() {
@@ -82,11 +84,11 @@ function Info_2() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 function SpanItem({ str }: { str: string }) {
-  return <span class="text-[14px] text-white/80 leading-10">{str}</span>;
+  return <span class="text-[14px] text-white/80 leading-10">{str}</span>
 }
 
 const arr = [
@@ -101,34 +103,62 @@ const arr = [
     <icon
       name="logos:github-octocat"
       class="text-[25px]"
-      onClick={() => to("https://github.com/AceXiamo")}
+      onClick={() => to('https://github.com/AceXiamo')}
+      onMouseenter={(e: Event) => {
+        gsap.to(e.currentTarget, {
+          duration: 0.3,
+          scale: 1.3,
+          ease: 'back.out(5)',
+        })
+      }}
+      onMouseleave={(e: Event) => {
+        gsap.to(e.currentTarget, {
+          duration: 0.3,
+          scale: 1,
+          ease: 'back.out(5)',
+        })
+      }}
     />
     <icon
       name="logos:twitter"
       class="text-[25px]"
-      onClick={() => to("https://twitter.com/AceXiamo")}
+      onClick={() => to('https://twitter.com/AceXiamo')}
+      onMouseenter={(e: Event) => {
+        gsap.to(e.currentTarget, {
+          duration: 0.3,
+          scale: 1.3,
+          ease: 'back.out(5)',
+        })
+      }}
+      onMouseleave={(e: Event) => {
+        gsap.to(e.currentTarget, {
+          duration: 0.3,
+          scale: 1,
+          ease: 'back.out(5)',
+        })
+      }}
     />
   </div>,
-];
+]
 
 const getGsapConfig = (index: number) => {
   return {
-    method: "from",
+    method: 'from',
     config: {
       opacity: 0,
       x: -20,
       delay: index * 0.1,
     },
-  };
-};
+  }
+}
 
 const to = (path: string) => {
-  window.open(path, "_blank");
-};
+  window.open(path, '_blank')
+}
 
 onMounted(() => {
-  useFetch("/api/say").then(({ data }) => {
-    console.log(data);
-  });
-});
+  useFetch('/api/say').then(({ data }) => {
+    console.log(data)
+  })
+})
 </script>
