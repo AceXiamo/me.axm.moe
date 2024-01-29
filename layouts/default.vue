@@ -15,8 +15,6 @@
 </template>
 
 <script lang="tsx" setup>
-import { Title } from '#build/components';
-
 const route = useRoute()
 const active = computed(() => route.name?.toString())
 let htmlElement: HTMLElement | null = null
