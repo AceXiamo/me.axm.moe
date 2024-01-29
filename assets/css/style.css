@@ -1,38 +1,46 @@
 :root {
+  color-scheme: light dark;
   --bg-dot-size: 10%;
-  --bg-dot-color: rgba(255, 255, 255, 0.1);
-  --bg-dot-background: #000;
+}
+
+.dark {
+  --bg-dot-color: rgba(255, 255, 255, 0.1) !important;
+  --bg: radial-gradient(closest-side, var(--bg-dot-color) var(--bg-dot-size), transparent 0) black !important;
+}
+
+.light {
+  --bg-dot-color: rgba(000, 000, 000, 0.1) !important;
+  --bg: radial-gradient(closest-side, var(--bg-dot-color) var(--bg-dot-size), transparent 0) white !important;
 }
 
 body {
   margin: unset;
   min-height: 100vh;
   min-width: 100vw;
-  background: radial-gradient(
-      closest-side,
-      var(--bg-dot-color) var(--bg-dot-size),
-      transparent 0
-    )
-    black;
+  background: var(--bg);
   background-size: 20px 20px;
 }
 
+::selection {
+  background: rgb(16 185 129 / 0.2);
+}
+
 @font-face {
-  font-family: "AllFont";
-  src: url("https://file.qwq.link/font/MonaspaceNeon-Light.woff");
+  font-family: 'AllFont';
+  src: url('~/assets/font/zzaw.woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "emoji-font";
-  src: url("https://file.qwq.link/font/seguiemj.ttf");
+  font-family: 'emoji-font';
+  src: url('~/assets/font/seguiemj.ttf');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-*:not([class*="icon"]):not(i) {
-  font-family: "AllFont", "emoji-font" !important;
+*:not([class*='icon']):not(i) {
+  font-family: 'AllFont', 'emoji-font' !important;
 }
