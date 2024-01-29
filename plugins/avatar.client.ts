@@ -76,10 +76,10 @@ export default defineNuxtPlugin({
     headerAvatarContainer = document.getElementById('header_avatar_container')
     router.afterEach((to, from) => {
       const toHomePage = to.path === '/'
-      toHomePage && handleBackHome(from.path === to.path)
+      toHomePage && handleBackHome(from.name === to.name)
     })
     router.beforeEach((to, from, next) => {
-      const refresh = from.path === to.path
+      const refresh = from.name === to.name
       if (refresh && to.path !== '/') {
         createHeaderAvatar()
         headerAvatarContainer?.appendChild(avatarFromHeader!)
@@ -90,7 +90,7 @@ export default defineNuxtPlugin({
         })
         next()
       } else {
-        const fromHomePage = from.path === '/' && from.path !== to.path
+        const fromHomePage = from.path === '/' && from.name !== to.name
         fromHomePage ? handleFromHome(next) : next()
       }
     })
