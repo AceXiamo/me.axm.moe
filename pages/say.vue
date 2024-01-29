@@ -1,5 +1,7 @@
 <template>
-  <div class="p-[100px]"></div>
+  <div class="p-[100px]">
+    
+  </div>
 </template>
 
 <script lang="ts" setup>
