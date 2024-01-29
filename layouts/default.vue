@@ -15,8 +15,10 @@
 </template>
 
 <script lang="tsx" setup>
+import { Title } from '#build/components';
+
 const route = useRoute()
-const active = computed(() => route.path)
+const active = computed(() => route.name?.toString())
 let htmlElement: HTMLElement | null = null
 const colorMode = useColorMode()
 
@@ -54,12 +56,14 @@ const toggleTheme = (e: MouseEvent) => {
 
 const menu = [
   {
-    name: 'Home',
+    title: 'Home',
+    name: 'index',
     path: '/',
     icon: 'heroicons:home',
   },
   {
-    name: 'Say',
+    title: 'Say',
+    name: 'say',
     path: '/say',
     icon: 'heroicons:chat-bubble-bottom-center-text',
   },
@@ -74,12 +78,12 @@ function MenuBar({ active }: { active?: string }) {
           onClick={() => to(item.path)}
         >
           <icon name={item.icon} />
-          <span class="select-none">{item.name}</span>
+          <span class="select-none">{item.title}</span>
           <div
             class={[
               `absolute inset-0 bg-black dark:bg-white -z-1 rounded-md opacity-0 transition-all duration-300 translate-y-[10px] translate-x-[5px]`,
               `group-hover:translate-[5px] group-hover:opacity-10`,
-              active === item.path && '!translate-[5px] opacity-10',
+              active === item.name && '!translate-[5px] opacity-10',
             ]}
           ></div>
         </div>
