@@ -101,7 +101,7 @@ const arr = [
   <SpanItem str="In my free time, I learn English on Duolingo, and have been doing so up until now." />,
   <SpanItem str="I also like anime, and I've watched a lot of them, such as 'Steins;Gate', 'Clannad', 'Attack on Titan', and so on." />,
   <SpanItem str="Maybe, You can find me on ..." />,
-  <div class="items-center flex gap-[15px]">
+  <div class="items-center flex gap-[15px] mt-[10px]">
     <icon
       name="logos:github-octocat"
       class="text-[25px]"
@@ -148,8 +148,9 @@ const getGsapConfig = (index: number) => {
     method: 'from',
     config: {
       opacity: 0,
-      x: -20,
-      delay: index * 0.1,
+      x: -25,
+      delay: index * 0.05,
+      ease: 'back(5)',
     },
   }
 }
