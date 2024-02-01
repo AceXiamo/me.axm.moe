@@ -27,7 +27,7 @@ body {
 
 @font-face {
   font-family: 'AllFont';
-  src: url('~/assets/font/MonaspaceRadon-Medium.woff');
+  src: url('https://file.qwq.link/font/NotoSansSC-Medium.woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -35,12 +35,12 @@ body {
 
 @font-face {
   font-family: 'emoji-font';
-  src: url('~/assets/font/seguiemj.ttf');
+  src: url('https://file.qwq.link/font/seguiemj.ttf');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 *:not([class*='icon']):not(i) {
-  font-family: 'AllFont', 'emoji-font' !important;
+  font-family: 'AllFont' !important;
 }
