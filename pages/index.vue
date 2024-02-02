@@ -191,10 +191,4 @@ const getGsapConfig = (index: number) => {
 const to = (path: string) => {
   window.open(path, '_blank')
 }
-
-onMounted(() => {
-  useFetch('/api/say').then(({ data }) => {
-    console.log(data)
-  })
-})
 </script>
