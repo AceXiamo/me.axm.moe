@@ -19,6 +19,7 @@ body {
   min-width: 100vw;
   background: var(--bg);
   background-size: 20px 20px;
+  overflow-x: hidden;
 }
 
 ::selection {
