@@ -65,6 +65,12 @@ const menu = [
     path: '/say',
     icon: 'heroicons:chat-bubble-bottom-center-text',
   },
+  {
+    title: '手办',
+    name: 'toy',
+    path: '/toy',
+    icon: 'heroicons:puzzle-piece',
+  },
 ]
 
 function MenuBar({ active }: { active?: string }) {
