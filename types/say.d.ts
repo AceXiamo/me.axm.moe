@@ -5,10 +5,10 @@ type SayRes = {
 type PostDataItem = {
   content?: string
   pid?: number
-  attach?:
-    | string
-    | {
-        src?: string
-        thum?: string
-      }[]
+  attach?: string | PostAttachItem[]
+}
+
+type PostAttachItem = {
+  src: string
+  thum: string
 }
