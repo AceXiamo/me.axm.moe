@@ -7,5 +7,8 @@ export default defineConfig({
         "./**/*.{ts,tsx,vue}",
       ]
     }
+  },
+  shortcuts: {
+    'content-w': 'w-[700px]'
   }
 });
