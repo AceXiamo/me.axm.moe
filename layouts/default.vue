@@ -22,6 +22,11 @@ const colorMode = useColorMode()
 
 const to = (path: string) => {
   if (route.path === path) return
+  if (path.startsWith('http')) {
+    window.open(path, '_blank')
+    return
+  }
+
   navigateTo(path)
 }
 
@@ -59,18 +64,37 @@ const menu = [
     path: '/',
     icon: 'heroicons:home',
   },
+  // {
+  //   title: 'Say',
+  //   name: 'say',
+  //   path: '/say',
+  //   icon: 'heroicons:chat-bubble-bottom-center-text',
+  // },
   {
-    title: 'Say',
-    name: 'say',
-    path: '/say',
-    icon: 'heroicons:chat-bubble-bottom-center-text',
+    title: 'Doing',
+    name: 'doing',
+    path: '/doing',
+    icon: 'heroicons:cube-transparent-16-solid',
   },
   {
-    title: '手办',
-    name: 'toy',
-    path: '/toy',
+    title: 'Blog',
+    name: 'blog',
+    path: 'https://axm.moe',
     icon: 'heroicons:puzzle-piece',
   },
+  
+  // {
+  //   title: 'Toy',
+  //   name: 'toy',
+  //   path: '/toy',
+  //   icon: 'heroicons:puzzle-piece',
+  // },
+  // {
+  //   title: 'About',
+  //   name: 'about',
+  //   path: '/about',
+  //   icon: 'heroicons:window-solid',
+  // },
 ]
 
 function MenuBar({ active }: { active?: string }) {
