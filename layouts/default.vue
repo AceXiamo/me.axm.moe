@@ -9,6 +9,11 @@
       >
         <icon name="heroicons:light-bulb" class="m-auto" />
       </div>
+      <div
+        class="ml-[10px] w-[30px] h-[30px] text-black flex dark:text-white rounded-[5px] transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
+      >
+        <icon name="bi:translate" class="m-auto" />
+      </div>
     </div>
     <slot />
   </div>
@@ -82,7 +87,7 @@ const menu = [
     path: 'https://axm.moe',
     icon: 'heroicons:puzzle-piece',
   },
-  
+
   // {
   //   title: 'Toy',
   //   name: 'toy',
