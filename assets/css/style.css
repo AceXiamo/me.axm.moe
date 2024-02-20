@@ -43,5 +43,5 @@ body {
 }
 
 *:not([class*='icon']):not(i) {
-  font-family: 'AllFont' !important;
+  /* font-family: 'AllFont' !important; */
 }
