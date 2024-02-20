@@ -33,11 +33,18 @@ const handleAnimateAvatar = (avatar: HTMLElement | null, fromProps: gsap.TweenVa
 
 const handleFromHome = (next: () => void) => {
   renderHeaderAvatar()
-  document.startViewTransition(() => {
+  const fun = () => {
     avatarFromHome?.remove()
     headerAvatarContainer?.appendChild(avatarFromHeader!)
     next()
-  })
+  }
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      fun()
+    })
+  } else {
+    fun()
+  }
 }
 
 const renderHeaderAvatar = () => {
@@ -55,10 +62,16 @@ const handleBackHome = (refresh: boolean) => {
   } else {
     initContainer(() => {
       homeAvatarContainer = document.getElementById('home_avatar_container')
-      document.startViewTransition(() => {
+      
+      const fun = () => {
         avatarFromHeader?.remove()
         homeAvatarContainer?.appendChild(avatarFromHome!)
-      })
+      }
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          fun()
+        })
+      } else fun()
     })
   }
 }
