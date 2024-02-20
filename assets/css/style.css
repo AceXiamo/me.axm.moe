@@ -6,11 +6,13 @@
 .dark {
   --bg-dot-color: rgba(255, 255, 255, 0.1) !important;
   --bg: radial-gradient(closest-side, var(--bg-dot-color) var(--bg-dot-size), transparent 0) black !important;
+  --scrollbar-bg: rgba(255, 255, 255, 0.2);
 }
 
 .light {
-  --bg-dot-color: rgba(000, 000, 000, 0.1) !important;
+  --bg-dot-color: rgba(0, 0, 0, 0.1) !important;
   --bg: radial-gradient(closest-side, var(--bg-dot-color) var(--bg-dot-size), transparent 0) white !important;
+  --scrollbar-bg: rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -44,4 +46,14 @@ body {
 
 *:not([class*='icon']):not(i) {
   /* font-family: 'AllFont' !important; */
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-bg);
+  border-radius: 10px;
 }
