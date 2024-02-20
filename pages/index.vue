@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[10px] p-[50px_200px]">
+  <div class="flex gap-[10px] lg:p-[50px_200px] lt-lg:p-[50px_20px]">
     <div class="flex flex-col max-w-[800px]">
       <div id="home_avatar_container" class="w-[100px] h-[100px] mb-[30px]"></div>
       <ClientOnly>
@@ -28,7 +28,7 @@ function Info_1() {
 function Info_2() {
   return (
     <>
-      <div class="text-[14px] text-black/80 dark:text-white/80 leading-10 flex items-center">
+      <div class="text-[14px] text-black/80 dark:text-white/80 leading-10 flex items-center flex-wrap">
         <div
           class="flex items-center gap-[6px]
           relative hover:before:w-[100%]
