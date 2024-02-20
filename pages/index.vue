@@ -14,12 +14,19 @@
 </template>
 <script setup lang="tsx">
 import gsap from 'gsap'
+import { loadLowerImgInSiteInit } from '@/utils/photo'
+
+onMounted(() => {
+  loadLowerImgInSiteInit()
+})
+
+const i18n = useI18n()
 
 function Info_1() {
   return (
     <>
       <div class="text-[14px] text-black/80 dark:text-white/80 leading-10">
-        {"I'm `AceXiamo`, you can call me [夏末 / xiamo]."}
+        {i18n.t('index.line_1')}
       </div>
     </>
   )
@@ -123,17 +130,17 @@ function Info_2() {
 }
 
 function SpanItem({ str }: { str: string }) {
-  return <span class="text-[14px] text-black/80 dark:text-white/80 leading-10">{str}</span>
+  return <span class="text-[14px] text-black/80 dark:text-white/80 leading-10">{i18n.t(str)}</span>
 }
 
 const arr = [
-  <SpanItem str="Hello 👋" />,
+  <SpanItem str="index.line_0" />,
   <Info_1 />,
-  <SpanItem str="I'm a full-stack developer, but I might prefer front-end development over back-end, I hope to do something meaningful with this." />,
+  <SpanItem str='index.line_2' />,
   <Info_2 />,
-  <SpanItem str="In my free time, I learn English on Duolingo, and have been doing so up until now." />,
-  <SpanItem str="I also like anime, and I've watched a lot of them, such as 'Steins;Gate', 'Clannad', 'Attack on Titan', and so on." />,
-  <SpanItem str="Maybe, You can find me on ..." />,
+  <SpanItem str='index.line_3' />,
+  <SpanItem str='index.line_4' />,
+  <SpanItem str='index.line_5' />,
   <div class="items-center flex gap-[15px] mt-[10px]">
     <icon
       name="logos:github-octocat"
