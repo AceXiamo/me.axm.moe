@@ -10,9 +10,6 @@
 <script lang="tsx" setup>
 import { render } from 'vue'
 import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 let imageContainer: null | HTMLElement = null,
   widthOfImage = 0,
