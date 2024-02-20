@@ -40,7 +40,6 @@ export default defineNuxtPlugin(nuxtApp => {
       if (config.scrollTrigger) {
         config.scrollTrigger = el
       }
-      console.log(config)
       gsap[method](el, config)
     },
     getSSRProps(binding) {
