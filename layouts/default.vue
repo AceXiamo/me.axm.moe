@@ -16,6 +16,7 @@
       </div>
       <div
         class="ml-[10px] w-[30px] h-[30px] text-black flex dark:text-white rounded-[5px] transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
+        @click="toggleLanguage"
       >
         <icon name="bi:translate" class="m-auto" />
       </div>
@@ -25,6 +26,7 @@
 </template>
 
 <script lang="tsx" setup>
+const i18n = useI18n()
 const route = useRoute()
 const active = computed(() => route.name?.toString())
 const colorMode = useColorMode()
@@ -46,8 +48,20 @@ const to = (path: string) => {
     window.open(path, '_blank')
     return
   }
-
   navigateTo(path)
+}
+
+watch(
+  () => i18n.locale.value,
+  () => {
+    console.log('i18n.locale.value', i18n.locale.value)
+  },
+  { immediate: true },
+)
+
+const toggleLanguage = () => {
+  const target = i18n.locale.value === 'en' ? 'zh' : 'en'
+  i18n.setLocale(target)
 }
 
 const toggleTheme = (e: MouseEvent) => {
@@ -84,7 +98,7 @@ const toggleTheme = (e: MouseEvent) => {
 
 const menu = [
   {
-    title: 'Home',
+    title: 'menu.home',
     name: 'index',
     path: '/',
     icon: 'heroicons:home',
@@ -96,13 +110,13 @@ const menu = [
   //   icon: 'heroicons:chat-bubble-bottom-center-text',
   // },
   {
-    title: 'Doing',
+    title: 'menu.doing',
     name: 'doing',
     path: '/doing',
     icon: 'heroicons:cube-transparent-16-solid',
   },
   {
-    title: 'Photo',
+    title: 'menu.photo',
     name: 'photo',
     path: '/photo',
     icon: 'heroicons:photo-solid',
@@ -136,7 +150,7 @@ function MenuBar({ active }: { active?: string }) {
           onClick={() => to(item.path)}
         >
           <icon name={item.icon} />
-          <span class="select-none">{item.title}</span>
+          <span class="select-none">{i18n.t(item.title)}</span>
           <div
             class={[
               `absolute inset-0 bg-black dark:bg-white -z-1 rounded-md opacity-0 transition-all duration-300 translate-y-[10px] translate-x-[5px]`,
