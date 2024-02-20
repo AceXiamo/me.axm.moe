@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@unocss/nuxt', 'nuxt-icon', '@nuxtjs/color-mode'],
+  modules: ['@unocss/nuxt', 'nuxt-icon', '@nuxtjs/color-mode', '@nuxtjs/i18n'],
   css: ['~/assets/css/style.css'],
   plugins: ['~/plugins/gsap.ts', '~/plugins/avatar.client.tsx'],
   colorMode: {
@@ -13,5 +13,12 @@ export default defineNuxtConfig({
     classPrefix: '',
     classSuffix: '',
     storageKey: 'nuxt-color-mode',
+  },
+  i18n: {
+    vueI18n: './i18n.config.ts',
+    defaultLocale: 'en',
+    detectBrowserLanguage: {
+      useCookie: true,
+    },
   },
 })
