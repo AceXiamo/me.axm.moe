@@ -2,7 +2,7 @@
   <div class="flex flex-col pt-[70px] pb-[200px]">
     <div class="lg:content-w lt-lg:px-[20px] lg:mx-auto flex flex-col gap-[5px]">
       <span class="text-black dark:text-white text-[15px]"
-        >「 Some things that are being persisted in doing. 👀 」</span
+        >「 {{ i18n.t('doing.title') }} 👀 」</span
       >
     </div>
     <div class="lg:content-w lt-lg:px-[20px] mx-auto mt-[50px]">
@@ -66,6 +66,7 @@
 <script lang="ts" setup>
 import Duolingo from '~/assets/images/duolingo.png'
 
+const i18n = useI18n()
 const { data, pending, refresh, error } = useFetch('/api/duolingo')
 console.log(data)
 </script>
