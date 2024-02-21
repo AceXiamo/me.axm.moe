@@ -15,6 +15,9 @@
 <script setup lang="tsx">
 import gsap from 'gsap'
 import { loadLowerImgInSiteInit } from '@/utils/photo'
+import dayjs from 'dayjs'
+
+const day = dayjs().diff(dayjs('2024-02-21'), 'day') + 345
 
 onMounted(() => {
   loadLowerImgInSiteInit()
@@ -136,11 +139,11 @@ function SpanItem({ str }: { str: string }) {
 const arr = [
   <SpanItem str="index.line_0" />,
   <Info_1 />,
-  <SpanItem str='index.line_2' />,
+  <SpanItem str="index.line_2" />,
   <Info_2 />,
-  <SpanItem str='index.line_3' />,
-  <SpanItem str='index.line_4' />,
-  <SpanItem str='index.line_5' />,
+  <LineThree str="index.line_3" />,
+  <SpanItem str="index.line_4" />,
+  <SpanItem str="index.line_5" />,
   <div class="items-center flex gap-[15px] mt-[10px]">
     <icon
       name="logos:github-octocat"
@@ -182,6 +185,18 @@ const arr = [
     />
   </div>,
 ]
+
+function LineThree({ str }: { str: string }) {
+  return (
+    <div>
+      <span class="text-[14px] text-black/80 dark:text-white/80 leading-10">{i18n.t(str)}</span>
+      <div class="inline-block drop-shadow-[5px_5px_5px_rgba(0,0,0,.4)] dark:drop-shadow-[5px_5px_5px_rgba(255,255,255,.5)] ml-[5px]">
+        <icon name="twemoji:fire" />
+        <span class="text-[14px] text-orange-500 leading-10 ml-[5px] cursor-default">{day}d</span>
+      </div>
+    </div>
+  )
+}
 
 const getGsapConfig = (index: number) => {
   return {
