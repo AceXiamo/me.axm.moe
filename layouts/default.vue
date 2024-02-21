@@ -51,18 +51,18 @@ const to = (path: string) => {
   navigateTo(path)
 }
 
-watch(
-  () => i18n.locale.value,
-  () => {
-    console.log('i18n.locale.value', i18n.locale.value)
-  },
-  { immediate: true },
-)
-
 const toggleLanguage = () => {
   const target = i18n.locale.value === 'en' ? 'zh' : 'en'
   i18n.setLocale(target)
 }
+
+onMounted(() => {
+  if (navigator.language == 'zh-CN') {
+    i18n.setLocale('zh')
+  } else {
+    i18n.setLocale('en')
+  }
+})
 
 const toggleTheme = (e: MouseEvent) => {
   const theme = document.querySelector(':root') as HTMLElement
