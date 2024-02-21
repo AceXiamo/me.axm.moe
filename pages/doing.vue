@@ -67,6 +67,6 @@
 import Duolingo from '~/assets/images/duolingo.png'
 
 const i18n = useI18n()
-const { data, pending, refresh, error } = useFetch('/api/duolingo')
-console.log(data)
+// const { data, pending, refresh, error } = useFetch('/api/duolingo')
+// console.log(data)
 </script>
