@@ -30,7 +30,7 @@ body {
 
 @font-face {
   font-family: 'AllFont';
-  src: url('https://file.qwq.link/font/NotoSansSC-Medium.woff2');
+  src: url('https://file.qwq.link/font/PingFang.woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -45,7 +45,7 @@ body {
 }
 
 *:not([class*='icon']):not(i) {
-  /* font-family: 'AllFont' !important; */
+  font-family: 'AllFont' !important;
 }
 
 ::-webkit-scrollbar {
