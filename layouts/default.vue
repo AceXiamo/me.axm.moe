@@ -26,6 +26,8 @@
 </template>
 
 <script lang="tsx" setup>
+import light from '~/utils/light';
+
 const i18n = useI18n()
 const route = useRoute()
 const active = computed(() => route.name?.toString())
@@ -62,6 +64,8 @@ onMounted(() => {
   } else {
     i18n.setLocale('en')
   }
+
+  light.generate()
 })
 
 const toggleTheme = (e: MouseEvent) => {
