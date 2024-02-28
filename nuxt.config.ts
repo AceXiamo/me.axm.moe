@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: 'AceXiamo',
+    },
+  },
   modules: ['@unocss/nuxt', 'nuxt-icon', '@nuxtjs/color-mode', '@nuxtjs/i18n'],
   css: ['~/assets/css/style.css'],
   plugins: ['~/plugins/gsap.ts', '~/plugins/avatar.client.tsx'],
