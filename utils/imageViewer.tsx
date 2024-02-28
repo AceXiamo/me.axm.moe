@@ -11,12 +11,7 @@ function ImageNode({ url }: { url: string }) {
 }
 
 function Shadow() {
-  return (
-    <div
-      class="fixed inset-0 bg-black opacity-50 "
-    ></div>
-  )
-
+  return <div class="fixed inset-0 bg-black opacity-50 "></div>
 }
 
 const show = (url: string, e: Event) => {
@@ -32,11 +27,15 @@ const show = (url: string, e: Event) => {
   div.appendChild(shadow)
   render(<Shadow />, shadow)
   el.style.setProperty('view-transition-name', VIEW_TRANSITION_NAME)
-  document.startViewTransition(() => {
+
+  const fn = () => {
     el.style.opacity = '0'
     el.style.removeProperty('view-transition-name')
     document.body.appendChild(div)
-  })
+  }
+  if (document.startViewTransition) {
+    document.startViewTransition(fn)
+  } else fn()
   div.addEventListener('click', () => {
     const vt = document.startViewTransition(() => {
       el.style.opacity = '1'
