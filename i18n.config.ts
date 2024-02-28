@@ -10,7 +10,7 @@ export default defineI18nConfig(() => ({
         photo: 'Photo',
       },
       index: {
-        line_0: 'Hello 👋',
+        line_0: 'Hello',
         line_1: "I'm `AceXiamo`, you can call me [夏末 / xiamo].",
         line_2:
           "I'm a full-stack developer, but I might prefer front-end development over back-end, I hope to do something meaningful with those.",
@@ -34,7 +34,7 @@ export default defineI18nConfig(() => ({
         photo: '相册',
       },
       index: {
-        line_0: '你好 👋',
+        line_0: '你好',
         line_1: '我是 `AceXiamo`，你可以叫我 [夏末 / xiamo]。',
         line_2:
           '我是一名全栈开发者，要比较的话，我大概更喜欢写前端，我也希望能用这些做一些有意义的事情。',

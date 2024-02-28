@@ -137,7 +137,12 @@ function SpanItem({ str }: { str: string }) {
 }
 
 const arr = [
-  <SpanItem str="index.line_0" />,
+  () => (
+    <div class='flex gap-[5px] items-center'>
+      <span class="text-[14px] text-black/80 dark:text-white/80 leading-10 translate-y-[5px]">{i18n.t('index.line_0')}</span>
+      <img src="https://file.qwq.link/gif/Hi.gif" alt="Hi" class="w-[20px] h-[20px] ml-[5px] inline-block" />
+    </div>
+  ),
   <Info_1 />,
   <SpanItem str="index.line_2" />,
   <Info_2 />,
