@@ -63,9 +63,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import Duolingo from '~/assets/images/duolingo.png'
-
 const i18n = useI18n()
 // const { data, pending, refresh, error } = useFetch('/api/duolingo')
 // console.log(data)
