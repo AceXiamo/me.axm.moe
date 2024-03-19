@@ -5,7 +5,7 @@ const LIGHT_SIZE = 100
 function Light() {
   return (
     <div
-      class="blur-[10px] dark:bg-white/20 bg-gray-500/5 rounded-full"
+      class="blur-[10px] dark:bg-white/5 bg-gray-500/5 rounded-full"
       style={{
         width: LIGHT_SIZE + 'px',
         height: LIGHT_SIZE + 'px',
