@@ -25,10 +25,7 @@
             },
           }"
         >
-          <div
-            class="lg:h-[15px] lg:w-[15px] lt-lg:h-[8px] lt-lg:w-[8px] rounded-[2px] bg-gray-200 dark:bg-white/10"
-            v-for="index of 7"
-          ></div>
+          <DoingItem v-for="i of 7" :offset="(40 - j) * 7 - i + weekDay" :type="'duolingo'" />
         </div>
       </div>
     </div>
@@ -53,10 +50,7 @@
             },
           }"
         >
-          <div
-            class="lg:h-[15px] lg:w-[15px] lt-lg:h-[8px] lt-lg:w-[8px] rounded-[2px] bg-gray-200 dark:bg-white/10"
-            v-for="index of 7"
-          ></div>
+          <DoingItem v-for="i of 7" :offset="(40 - j) * 7 - i + weekDay" :type="'sports'" />
         </div>
       </div>
     </div>
@@ -64,8 +58,42 @@
 </template>
 
 <script lang="tsx" setup>
+import dayjs from 'dayjs'
 import Duolingo from '~/assets/images/duolingo.png'
+
 const i18n = useI18n()
-// const { data, pending, refresh, error } = useFetch('/api/duolingo')
-// console.log(data)
+const { data: sports, pending: pendingForSports } = useFetch('/api/doing?name=sports')
+const { data: duolingo, pending: pendingForDuolingo } = useFetch('/api/doing?name=duolingo')
+const day = dayjs()
+const weekDay = day.day()
+
+const colorForLevel = (level: Level) => {
+  switch (level) {
+    case 'low':
+      return '#22c55e60'
+    case 'medium':
+      return '#22c55e80'
+    case 'high':
+      return '#22c55e'
+    default:
+      return ''
+  }
+}
+
+function DoingItem({ offset, type }: { offset: number; type: 'duolingo' | 'sports' }) {
+  const offsetDay = day.subtract(offset, 'day').format('YYYY-MM-DD')
+  const status =
+    type === 'duolingo'
+      ? duolingo.value?.find(item => item.day === offsetDay)
+      : sports.value?.find(item => item.day === offsetDay)
+  const color = colorForLevel(status?.value || 'none')
+  return (
+    <div
+      class="lg:h-[15px] lg:w-[15px] lt-lg:h-[8px] lt-lg:w-[8px] rounded-[2px] bg-gray-200 text-[8px] dark:bg-white/10"
+      style={{
+        backgroundColor: color,
+      }}
+    ></div>
+  )
+}
 </script>
