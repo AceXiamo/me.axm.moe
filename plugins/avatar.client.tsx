@@ -1,6 +1,5 @@
 import { gsap } from 'gsap'
 import { render } from 'vue'
-import Avatar from '~/assets/images/avatar.jpg'
 
 let homeAvatarContainer: HTMLElement | null = null
 let headerAvatarContainer: HTMLElement | null = null
@@ -19,7 +18,7 @@ function AvatarComponent({ type }: { type: AvatarType }) {
           `border border-solid border-gray-500/10 shadow-md dark:border-white/30 dark:border-dashed`,
       ]}
     >
-      <img src={Avatar} style={{ width: '100%', height: '100%', borderRadius: '100%' }} />
+      <img src="https://axm.moe/avatar" style={{ width: '100%', height: '100%', borderRadius: '100%' }} />
     </div>
   )
 }
