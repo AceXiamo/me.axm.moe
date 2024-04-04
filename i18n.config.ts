@@ -19,6 +19,9 @@ export default defineI18nConfig(() => ({
         line_4:
           "I also like anime, and I've watched a lot of them, such as 'Steins;Gate', 'Clannad', 'Attack on Titan', and so on.",
         line_5: 'Maybe, You can find me on ...',
+        line_6_1: 'Want to know more? Click',
+        line_6_2: 'here',
+        line_6_3: 'to go to my blog 🎉',
       },
       doing: {
         title: 'Some things that are being persisted in doing.',
@@ -41,6 +44,9 @@ export default defineI18nConfig(() => ({
         line_3: '在空闲时间，我会在 Duolingo 上学习英语，并且一直持续到当下。',
         line_4: '我也喜欢看动漫，看过很多，比如《命运石之门》、《CLANNAD》、《进击的巨人》等等。',
         line_5: '或许，你还能在这里找到我...',
+        line_6_1: '想要了解更多？点击',
+        line_6_2: '此处',
+        line_6_3: '以转到我的博客 🎉',
       },
       doing: {
         title: '一些正在坚持做的事情。',
