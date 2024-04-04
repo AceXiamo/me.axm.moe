@@ -16,12 +16,9 @@
 import gsap from 'gsap'
 import { loadLowerImgInSiteInit } from '@/utils/photo'
 import dayjs from 'dayjs'
+import Wave from '~/assets/images/wave.png'
 
 const day = dayjs().diff(dayjs('2024-02-21'), 'day') + 345
-
-onMounted(() => {
-  loadLowerImgInSiteInit()
-})
 
 const i18n = useI18n()
 
@@ -136,60 +133,100 @@ function SpanItem({ str }: { str: string }) {
   return <span class="text-[14px] text-black/80 dark:text-white/80 leading-10">{i18n.t(str)}</span>
 }
 
-const arr = [
-  () => (
-    <div class='flex gap-[5px] items-center'>
-      <span class="text-[14px] text-black/80 dark:text-white/80 leading-10 translate-y-[5px]">{i18n.t('index.line_0')}</span>
-      <img src="https://file.qwq.link/gif/Hi.gif" alt="Hi" class="w-[20px] h-[20px] ml-[5px] inline-block" />
+function Hello() {
+  return (
+    <div class="flex gap-[5px] items-center">
+      <span class="text-[14px] text-black/80 dark:text-white/80 leading-10 translate-y-[5px]">
+        {i18n.t('index.line_0')}
+      </span>
+      <img
+        src="https://file.qwq.link/gif/Hi.gif"
+        alt="Hi"
+        class="w-[20px] h-[20px] ml-[5px] inline-block"
+      />
     </div>
-  ),
+  )
+}
+
+const arr = [
+  <Hello />,
   <Info_1 />,
   <SpanItem str="index.line_2" />,
   <Info_2 />,
   <LineThree str="index.line_3" />,
   <SpanItem str="index.line_4" />,
   <SpanItem str="index.line_5" />,
-  <div class="items-center flex gap-[15px] mt-[10px]">
-    <icon
-      name="logos:github-octocat"
-      class="text-[25px]"
-      onClick={() => to('https://github.com/AceXiamo')}
-      onMouseenter={(e: Event) => {
-        gsap.to(e.currentTarget, {
-          duration: 0.3,
-          scale: 1.3,
-          ease: 'back.out(5)',
-        })
-      }}
-      onMouseleave={(e: Event) => {
-        gsap.to(e.currentTarget, {
-          duration: 0.3,
-          scale: 1,
-          ease: 'back.out(5)',
-        })
-      }}
-    />
-    <icon
-      name="logos:twitter"
-      class="text-[25px]"
-      onClick={() => to('https://twitter.com/AceXiamo')}
-      onMouseenter={(e: Event) => {
-        gsap.to(e.currentTarget, {
-          duration: 0.3,
-          scale: 1.3,
-          ease: 'back.out(5)',
-        })
-      }}
-      onMouseleave={(e: Event) => {
-        gsap.to(e.currentTarget, {
-          duration: 0.3,
-          scale: 1,
-          ease: 'back.out(5)',
-        })
-      }}
-    />
-  </div>,
+  <Another />,
+  <Dot />,
+  <Blog />,
 ]
+
+function Another() {
+  return (
+    <div class="items-center flex gap-[15px] mt-[10px]">
+      <icon
+        name="logos:github-octocat"
+        class="text-[25px]"
+        onClick={() => to('https://github.com/AceXiamo')}
+        onMouseenter={(e: Event) => {
+          gsap.to(e.currentTarget, {
+            duration: 0.3,
+            scale: 1.3,
+            ease: 'back.out(5)',
+          })
+        }}
+        onMouseleave={(e: Event) => {
+          gsap.to(e.currentTarget, {
+            duration: 0.3,
+            scale: 1,
+            ease: 'back.out(5)',
+          })
+        }}
+      />
+      <icon
+        name="logos:twitter"
+        class="text-[25px]"
+        onClick={() => to('https://twitter.com/AceXiamo')}
+        onMouseenter={(e: Event) => {
+          gsap.to(e.currentTarget, {
+            duration: 0.3,
+            scale: 1.3,
+            ease: 'back.out(5)',
+          })
+        }}
+        onMouseleave={(e: Event) => {
+          gsap.to(e.currentTarget, {
+            duration: 0.3,
+            scale: 1,
+            ease: 'back.out(5)',
+          })
+        }}
+      />
+    </div>
+  )
+}
+
+function Dot() {
+  return <div class="text-[14px] text-black/80 dark:text-white/80 leading-10">...</div>
+}
+
+function Blog() {
+  return (
+    <div class="text-[14px] text-black/80 dark:text-white/80 leading-10 flex gap-[5px]">
+      <span>{i18n.t("index.line_6_1")}</span>
+      <span
+        class="text-[14px] cursor-pointer wave_line text-blue-400 dark:text-blue-300"
+        style={{
+          backgroundImage: `url(${Wave})`,
+        }}
+        onClick={() => to('https://axm.moe')}
+      >
+        {i18n.t("index.line_6_2")}
+      </span>
+      <span>{i18n.t("index.line_6_3")}</span>
+    </div>
+  )
+}
 
 function LineThree({ str }: { str: string }) {
   return (
@@ -218,4 +255,29 @@ const getGsapConfig = (index: number) => {
 const to = (path: string) => {
   window.open(path, '_blank')
 }
+
+onMounted(() => {
+  loadLowerImgInSiteInit()
+})
 </script>
+
+<style>
+.wave_line {
+  background-repeat: repeat-x;
+  background-size: 15px auto;
+  background-position: 0 80%;
+
+  &:hover {
+    animation: wave 6s linear infinite;
+  }
+}
+
+@keyframes wave {
+  0% {
+    background-position-x: 2px;
+  }
+  100% {
+    background-position-x: 50px;
+  }
+}
+</style>
