@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'AceXiamo',
+      link: [{ rel: 'icon', type: 'image/x-icon', href: 'https://axm.moe/avatar' }],
     },
   },
   modules: ['@unocss/nuxt', 'nuxt-icon', '@nuxtjs/color-mode', '@nuxtjs/i18n'],
