@@ -29,6 +29,7 @@
 
 <script lang="tsx" setup>
 import gsap from 'gsap'
+import Avatar from '~/assets/images/avatar.png'
 
 const cover = ref()
 const page = ref(0)
@@ -43,7 +44,7 @@ onMounted(() => {
 function ChatItem({ item }: { item: PostDataItem }) {
   return (
     <div class="flex gap-[20px]">
-      <img src="https://axm.moe/avatar" class="w-[40px] h-[40px] rounded-full" />
+      <img src={Avatar} class="w-[40px] h-[40px] rounded-full" />
       <div class="flex-auto flex flex-col">
         <div class="flex gap-[10px] items-center">
           <span class="text-gray-600 text-[12px]">xiamo</span>
