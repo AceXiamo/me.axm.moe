@@ -131,7 +131,7 @@ function ImageLoading() {
   return (
     <div class="flex flex-col bg-black/20 absolute inset-0 items-center justify-center">
       <img class="w-[40px] h-[40px] object-cover" src={BuncingBall} />
-      <span class="text-[12px] mt-[10px]">加载原图中</span>
+      <span class="text-[12px] mt-[10px] text-white">加载原图中</span>
     </div>
   )
 }
