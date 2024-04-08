@@ -12,6 +12,17 @@
           class="w-[100px] drop-shadow-[4px_7px_5px_#00000050] dark:drop-shadow-[4px_7px_5px_#FFFFFF50]"
         />
       </div>
+      <img
+        :src="duolingoImage || ''"
+        class="h-[150px] border border-dashed border-black/20 dark:border-white/80 rounded-[20px] mt-[20px]"
+        v-gsap="{
+          method: 'from',
+          config: {
+            x: 50,
+            opacity: 0,
+          },
+        }"
+      />
       <div class="w-full grid grid-cols-40 grid-rows-1 gap-[5px] mt-[20px]">
         <div
           class="grid grid-rows-7 lg:gap-[5px] lt-lg:gap-[2px]"
@@ -64,6 +75,7 @@ import Duolingo from '~/assets/images/duolingo.png'
 const i18n = useI18n()
 const { data: sports, pending: pendingForSports } = useFetch('/api/doing?name=sports')
 const { data: duolingo, pending: pendingForDuolingo } = useFetch('/api/doing?name=duolingo')
+const { data: duolingoImage } = useFetch('/api/duolingo')
 const day = dayjs()
 const weekDay = day.day()
 
