@@ -8,8 +8,8 @@ const result = {
 }
 const GITHUB_GIST_API = 'https://api.github.com/gists/'
 
-// clear cache every day
-cron.schedule('0 0 * * *', () => {
+// clear cache at 23:35
+cron.schedule('35 23 * * *', () => {
   Object.keys(result).forEach(key => {
     result[key as QueryType] = []
   })
