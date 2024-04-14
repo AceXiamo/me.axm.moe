@@ -17,6 +17,8 @@ import gsap from 'gsap'
 import { loadLowerImgInSiteInit } from '@/utils/photo'
 import dayjs from 'dayjs'
 import Wave from '~/assets/images/wave.png'
+import { render } from 'vue'
+import Screenshot from '~/assets/images/screenshot.png'
 
 const day = dayjs().diff(dayjs('2024-02-21'), 'day') + 345
 
@@ -213,17 +215,23 @@ function Dot() {
 function Blog() {
   return (
     <div class="text-[14px] text-black/80 dark:text-white/80 leading-10 flex gap-[5px]">
-      <span>{i18n.t("index.line_6_1")}</span>
-      <span
-        class="text-[14px] cursor-pointer wave_line text-blue-400 dark:text-blue-300"
+      <span>{i18n.t('index.line_6_1')}</span>
+      <div
+        class="text-[14px] cursor-pointer text-blue-400 dark:text-blue-300 relative flex justify-center wave_line screenshot_item"
+        onMouseenter={(e: Event) => {}}
+        onMouseleave={(e: Event) => {}}
         style={{
           backgroundImage: `url(${Wave})`,
         }}
         onClick={() => to('https://axm.moe')}
       >
-        {i18n.t("index.line_6_2")}
-      </span>
-      <span>{i18n.t("index.line_6_3")}</span>
+        <span>{i18n.t('index.line_6_2')}</span>
+        {/* site screenshot */}
+        <div class="site_screenshot absolute bottom-0 translate-y-full">
+          <img src={Screenshot} class="w-[260px]" />
+        </div>
+      </div>
+      <span>{i18n.t('index.line_6_3')}</span>
     </div>
   )
 }
@@ -278,6 +286,22 @@ onMounted(() => {
   }
   100% {
     background-position-x: 50px;
+  }
+}
+
+.screenshot_item {
+  .site_screenshot {
+    opacity: 0;
+    bottom: 5px;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  &:hover {
+    .site_screenshot {
+      opacity: 1;
+      bottom: 0;
+    }
   }
 }
 </style>
