@@ -97,17 +97,6 @@ function Info_2() {
           class="flex items-center ml-2 gap-[6px]
           relative hover:before:w-[100%]
           before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[1px]
-          before:w-0 before:bg-purple-500 before:transition-all before:duration-300
-          before:blur-[2px]
-        "
-        >
-          <icon name="logos:react" />
-          <span>React,</span>
-        </div>
-        <div
-          class="flex items-center ml-2 gap-[6px]
-          relative hover:before:w-[100%]
-          before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[1px]
           before:w-0 before:bg-green-500 before:transition-all before:duration-300
           before:blur-[2px]
         "
@@ -119,12 +108,34 @@ function Info_2() {
           class="flex items-center ml-2 gap-[6px]
           relative hover:before:w-[100%]
           before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[1px]
+          before:w-0 before:bg-purple-500 before:transition-all before:duration-300
+          before:blur-[2px]
+        "
+        >
+          <icon name="logos:react" />
+          <span>React,</span>
+        </div>
+        <div
+          class="flex items-center ml-2 gap-[6px]
+          relative hover:before:w-[100%]
+          before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[1px]
           before:w-0 before:bg-black before:transition-all before:duration-300
           before:blur-[2px]
         "
         >
           <icon name="logos:nextjs-icon" />
-          <span>Nextjs ...</span>
+          <span>Nextjs,</span>
+        </div>
+        <div
+          class="flex items-center ml-2 gap-[6px]
+          relative hover:before:w-[100%]
+          before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[1px]
+          before:w-0 before:bg-purple-500 before:transition-all before:duration-300
+          before:blur-[2px]
+        "
+        >
+          <icon name="logos:react" />
+          <span>React Native ...</span>
         </div>
       </div>
     </>
