@@ -22,6 +22,7 @@ export default defineI18nConfig(() => ({
         line_6_1: 'Want to know more? Click',
         line_6_2: 'here',
         line_6_3: 'to go to my blog 🎉',
+        my_products: 'Side Project',
       },
       doing: {
         title: 'Some things that are being persisted in doing.',
@@ -47,6 +48,7 @@ export default defineI18nConfig(() => ({
         line_6_1: '想要了解更多？点击',
         line_6_2: '此处',
         line_6_3: '以转到我的博客 🎉',
+        my_products: '业余造的小玩具~',
       },
       doing: {
         title: '一些正在坚持做的事情。',

@@ -161,18 +161,86 @@ function Hello() {
   )
 }
 
-const arr = [
-  <Hello />,
-  <Info_1 />,
-  <SpanItem str="index.line_2" />,
-  <Info_2 />,
-  <LineThree str="index.line_3" />,
-  <SpanItem str="index.line_4" />,
-  <SpanItem str="index.line_5" />,
-  <Another />,
-  <Dot />,
-  <Blog />,
+const products = [
+  {
+    icon: 'https://creatoix.com/logo.png',
+    name: 'Creatoix',
+    url: 'https://creatoix.com'
+  },
+  {
+    icon: 'https://cardora.app/logo.png',
+    name: 'Cardora',
+    url: 'https://cardora.app'
+  },
+  {
+    icon: 'https://mp.acexiamo.com/logo.png',
+    name: '微信公众号AI排版工具',
+    url: 'https://mp.acexiamo.com'
+  },
+  {
+    icon: 'https://imagify.acexiamo.com/logo.png',
+    name: 'Gemini Image Generator',
+    url: 'https://imagify.acexiamo.com'
+  },
+  {
+    icon: 'https://qwq.wiki/_nuxt/avatar.eab7fd22.avif',
+    name: 'Vtuber site',
+    url: 'https://qwq.wiki'
+  },
 ]
+
+function Products() {
+  return (
+    <div class="mt-[25px]">
+      <div class="relative pt-[12px] mb-[15px]">
+        <div class="absolute top-0 left-0 w-[30px] h-[1px] bg-gradient-to-r from-violet-500/70 to-transparent"></div>
+        <div class="text-[14px] text-black/80 dark:text-white/80 leading-10 flex items-center gap-[5px]">
+          <span>🛝</span>
+          <span>{i18n.t('index.my_products')}</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-[12px]">
+        {products.map((product, index) => (
+          <div 
+            key={index}
+            class="group flex items-center gap-[8px] px-[12px] py-[7px] rounded-[6px]
+                  bg-white/5 dark:bg-black/5 
+                  border border-dashed border-gray-300/50 dark:border-gray-600/50
+                  hover:border-violet-500/70 dark:hover:border-violet-400/70 
+                  transition-colors duration-300 cursor-pointer"
+            onClick={() => to(product.url)}
+          >
+            <div class="w-[20px] h-[20px] overflow-hidden rounded-[4px] 
+                        shadow-[0_0_3px_rgba(0,0,0,0.1)] dark:shadow-[0_0_3px_rgba(255,255,255,0.1)]">
+              <img src={product.icon} alt={product.name} class="w-full h-full object-cover" />
+            </div>
+            <div class="text-[13px] text-black/80 dark:text-white/80 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors duration-300">
+              {product.name}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function WakaTime() {
+  return (
+    <div class="mt-[20px]">
+      <a 
+        href="https://wakatime.com/@AceXiamo" 
+        target="_blank" 
+        class="inline-block hover:opacity-90 transition-opacity duration-300"
+      >
+        <img 
+          src="https://wakatime.com/badge/user/018cfc16-cef4-48ad-8d48-b7cfbdb30915.svg" 
+          alt="WakaTime" 
+          class="h-[20px]"
+        />
+      </a>
+    </div>
+  )
+}
 
 function Another() {
   return (
@@ -258,6 +326,21 @@ function LineThree({ str }: { str: string }) {
     </div>
   )
 }
+
+const arr = [
+  <Hello />,
+  <Info_1 />,
+  <SpanItem str="index.line_2" />,
+  <Info_2 />,
+  <LineThree str="index.line_3" />,
+  <SpanItem str="index.line_4" />,
+  <SpanItem str="index.line_5" />,
+  <Another />,
+  <Dot />,
+  <Blog />,
+  <Products />,
+  <WakaTime />,
+]
 
 const getGsapConfig = (index: number) => {
   return {
