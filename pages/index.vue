@@ -189,7 +189,7 @@ const products = [
   // },
   {
     icon: 'https://mbti.acexiamo.com/logo.png',
-    name: 'MBTI x AI',
+    name: 'Mindly',
     url: 'https://mbti.acexiamo.com'
   },
   {
