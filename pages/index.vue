@@ -183,6 +183,26 @@ const products = [
     url: 'https://imagify.acexiamo.com'
   },
   {
+    icon: 'https://nomika.dev/logo.png',
+    name: 'Nomika',
+    url: 'https://nomika.dev'
+  },
+  {
+    icon: 'https://mbti.acexiamo.com/logo.png',
+    name: 'MBTI x AI',
+    url: 'https://mbti.acexiamo.com'
+  },
+  {
+    icon: 'https://tweet.nomika.dev/logo.png',
+    name: 'Twitter Card Generator',
+    url: 'https://tweet.nomika.dev'
+  },
+  {
+    icon: 'https://nexion.acexiamo.com/logo.png',
+    name: 'Nexion',
+    url: 'https://nexion.acexiamo.com'
+  },
+  {
     icon: 'https://qwq.wiki/_nuxt/avatar.eab7fd22.avif',
     name: 'Vtuber site',
     url: 'https://qwq.wiki'
