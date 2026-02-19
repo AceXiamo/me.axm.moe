@@ -167,26 +167,26 @@ const products = [
     name: 'Creatoix',
     url: 'https://creatoix.com'
   },
-  {
-    icon: 'https://cardora.app/logo.png',
-    name: 'Cardora',
-    url: 'https://cardora.app'
-  },
-  {
-    icon: 'https://mp.acexiamo.com/logo.png',
-    name: '微信公众号AI排版工具',
-    url: 'https://mp.acexiamo.com'
-  },
-  {
-    icon: 'https://imagify.acexiamo.com/logo.png',
-    name: 'Gemini Image Generator',
-    url: 'https://imagify.acexiamo.com'
-  },
-  {
-    icon: 'https://nomika.dev/logo.png',
-    name: 'Nomika',
-    url: 'https://nomika.dev'
-  },
+  // {
+  //   icon: 'https://cardora.app/logo.png',
+  //   name: 'Cardora',
+  //   url: 'https://cardora.app'
+  // },
+  // {
+  //   icon: 'https://mp.acexiamo.com/logo.png',
+  //   name: '微信公众号AI排版工具',
+  //   url: 'https://mp.acexiamo.com'
+  // },
+  // {
+  //   icon: 'https://imagify.acexiamo.com/logo.png',
+  //   name: 'Gemini Image Generator',
+  //   url: 'https://imagify.acexiamo.com'
+  // },
+  // {
+  //   icon: 'https://nomika.dev/logo.png',
+  //   name: 'Nomika',
+  //   url: 'https://nomika.dev'
+  // },
   {
     icon: 'https://mbti.acexiamo.com/logo.png',
     name: 'MBTI x AI',
@@ -202,11 +202,11 @@ const products = [
     name: 'Nexion',
     url: 'https://nexion.acexiamo.com'
   },
-  {
-    icon: 'https://qwq.wiki/_nuxt/avatar.eab7fd22.avif',
-    name: 'Vtuber site',
-    url: 'https://qwq.wiki'
-  },
+  // {
+  //   icon: 'https://qwq.wiki/_nuxt/avatar.eab7fd22.avif',
+  //   name: 'Vtuber site',
+  //   url: 'https://qwq.wiki'
+  // },
 ]
 
 function Products() {
