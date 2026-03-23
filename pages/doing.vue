@@ -5,7 +5,7 @@
         >「 {{ i18n.t('doing.title') }} 👀 」</span
       >
     </div>
-    <div class="lg:content-w lt-lg:px-[20px] mx-auto mt-[50px]">
+    <div class="lg:content-w lt-lg:px-[20px] mx-auto mt-[50px]" ref="duolingoSection">
       <div class="text-md text-black">
         <img
           :src="Duolingo"
@@ -13,35 +13,21 @@
         />
       </div>
       <img
+        ref="duolingoImg"
         :src="duolingoImage || ''"
         class="h-[150px] border border-dashed border-black/20 dark:border-white/80 rounded-[20px] mt-[20px]"
-        v-gsap="{
-          method: 'from',
-          config: {
-            x: 50,
-            opacity: 0,
-          },
-        }"
       />
       <div class="w-full grid grid-cols-40 grid-rows-1 gap-[5px] mt-[20px]">
         <div
-          class="grid grid-rows-7 lg:gap-[5px] lt-lg:gap-[2px]"
+          class="duo-col grid grid-rows-7 lg:gap-[5px] lt-lg:gap-[2px]"
           v-for="j of 40"
-          v-gsap="{
-            method: 'from',
-            config: {
-              y: 20,
-              opacity: 0,
-              delay: j * 0.01,
-            },
-          }"
         >
           <DoingItem v-for="i of 7" :offset="(40 - j) * 7 - i + weekDay" :type="'duolingo'" />
         </div>
       </div>
     </div>
 
-    <div class="lg:content-w lt-lg:px-[20px] mx-auto mt-[50px]">
+    <div class="lg:content-w lt-lg:px-[20px] mx-auto mt-[50px]" ref="sportsSection">
       <div
         class="text-md text-blue-400 flex items-center -translate-x-[7px] drop-shadow-[4px_7px_5px_#00000080] dark:drop-shadow-[4px_7px_5px_#FFFFFF90]"
       >
@@ -50,16 +36,8 @@
       </div>
       <div class="w-full grid grid-cols-40 grid-rows-1 gap-[5px] mt-[20px]">
         <div
-          class="grid grid-rows-7 lg:gap-[5px] lt-lg:gap-[2px]"
+          class="sport-col grid grid-rows-7 lg:gap-[5px] lt-lg:gap-[2px]"
           v-for="j of 40"
-          v-gsap="{
-            method: 'from',
-            config: {
-              y: 20,
-              opacity: 0,
-              delay: (40 - j) * 0.01,
-            },
-          }"
         >
           <DoingItem v-for="i of 7" :offset="(40 - j) * 7 - i + weekDay" :type="'sports'" />
         </div>
@@ -69,6 +47,7 @@
 </template>
 
 <script lang="tsx" setup>
+import gsap from 'gsap'
 import dayjs from 'dayjs'
 import Duolingo from '~/assets/images/duolingo.png'
 
@@ -78,6 +57,10 @@ const { data: duolingo, pending: pendingForDuolingo } = useFetch('/api/doing?nam
 const { data: duolingoImage } = useFetch('/api/duolingo')
 const day = dayjs()
 const weekDay = day.day()
+
+const duolingoImg = ref<HTMLElement>()
+const duolingoSection = ref<HTMLElement>()
+const sportsSection = ref<HTMLElement>()
 
 const colorForLevel = (level: Level) => {
   switch (level) {
@@ -108,4 +91,44 @@ function DoingItem({ offset, type }: { offset: number; type: 'duolingo' | 'sport
     ></div>
   )
 }
+
+let ctx: gsap.Context | null = null
+
+onMounted(() => {
+  ctx = gsap.context(() => {
+    gsap.from(duolingoImg.value!, {
+      x: 50,
+      autoAlpha: 0,
+    })
+
+    const duoCols = gsap.utils.toArray<HTMLElement>('.duo-col')
+    gsap.from(duoCols, {
+      y: 20,
+      autoAlpha: 0,
+      stagger: 0.015,
+      duration: 0.3,
+      ease: 'power2.out',
+    })
+
+    const sportCols = gsap.utils.toArray<HTMLElement>('.sport-col')
+    gsap.from(sportCols, {
+      y: 20,
+      autoAlpha: 0,
+      stagger: {
+        each: 0.015,
+        from: 'end',
+      },
+      duration: 0.3,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: sportsSection.value,
+        start: 'top 80%',
+      },
+    })
+  })
+})
+
+onUnmounted(() => {
+  ctx?.revert()
+})
 </script>

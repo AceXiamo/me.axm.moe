@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import { render } from 'vue'
 
 const LIGHT_SIZE = 100
@@ -14,63 +15,38 @@ function Light() {
   )
 }
 
-let targetX: number = 0,
-  targetY: number = 0,
-  x: number = 0,
-  y: number = 0,
-  ease: number = 0.05,
-  rafId: number | null = null
-
-const moveByEase = (): { x: number; y: number } => {
-  x += (targetX - x) * ease
-  y += (targetY - y) * ease
-  return { x, y }
-}
-
 const lightId = 'the_light'
-const generate = (init?: { x: number; y: number }) => {
-  if (document.getElementById(lightId)) {
-    return
-  }
+
+const generate = () => {
+  if (document.getElementById(lightId)) return
 
   const div = document.createElement('div')
   div.id = lightId
   div.style.position = 'fixed'
   div.style.pointerEvents = 'none'
-  div.style.left = (init?.x ?? window.innerWidth / 2) + 'px'
-  div.style.top = (init?.y ?? window.innerHeight / 2) + 'px'
+  div.style.left = `${window.innerWidth / 2}px`
+  div.style.top = `${window.innerHeight / 2}px`
   div.style.transform = 'translate(-50%, -50%)'
-  div.style.transition = 'transform 0.7s ease, opacity 0.7s ease'
   div.style.zIndex = '9999'
   render(<Light />, div)
   document.body.appendChild(div)
 
-  const animate = () => {
-    const { x, y } = moveByEase()
-    div.style.left = `${x}px`
-    div.style.top = `${y}px`
-    const dist = Math.hypot(targetX - x, targetY - y)
-    if (dist > 1) {
-      rafId = requestAnimationFrame(animate)
-    }
-  }
+  gsap.set(div, { scale: 0, autoAlpha: 0 })
+
+  const xTo = gsap.quickTo(div, 'left', { duration: 0.5, ease: 'power3.out' })
+  const yTo = gsap.quickTo(div, 'top', { duration: 0.5, ease: 'power3.out' })
 
   document.addEventListener('mousemove', e => {
-    targetX = e.clientX
-    targetY = e.clientY
-    if (rafId !== null) {
-      cancelAnimationFrame(rafId)
-    }
-    animate()
+    xTo(e.clientX)
+    yTo(e.clientY)
   })
 
   document.addEventListener('mouseenter', () => {
-    div.style.transform = `translate(-50%, -50%) scale(1)`
-    div.style.opacity = '1'
+    gsap.to(div, { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'power2.out' })
   })
+
   document.addEventListener('mouseleave', () => {
-    div.style.transform = `translate(-50%, -50%) scale(0)`
-    div.style.opacity = '0'
+    gsap.to(div, { scale: 0, autoAlpha: 0, duration: 0.4, ease: 'power2.out' })
   })
 }
 

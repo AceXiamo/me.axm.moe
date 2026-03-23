@@ -2,13 +2,15 @@
   <div class="flex gap-[10px] lg:p-[50px_200px] lt-lg:p-[50px_20px]">
     <div class="flex flex-col max-w-[800px]">
       <div id="home_avatar_container" class="w-[100px] h-[100px] mb-[30px]"></div>
-      <ClientOnly>
-        <template v-for="(item, index) in arr" :key="index">
-          <div v-gsap="getGsapConfig(index)">
-            <component :is="item" />
-          </div>
-        </template>
-      </ClientOnly>
+      <div ref="contentRef">
+        <ClientOnly>
+          <template v-for="(item, index) in arr" :key="index">
+            <div class="gsap-item">
+              <component :is="item" />
+            </div>
+          </template>
+        </ClientOnly>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +25,7 @@ import Screenshot from '~/assets/images/screenshot.png'
 const day = dayjs().diff(dayjs('2024-02-21'), 'day') + 345
 
 const i18n = useI18n()
+const contentRef = ref<HTMLElement>()
 
 function Info_1() {
   return (
@@ -167,26 +170,6 @@ const products = [
     name: 'Creatoix',
     url: 'https://creatoix.com'
   },
-  // {
-  //   icon: 'https://cardora.app/logo.png',
-  //   name: 'Cardora',
-  //   url: 'https://cardora.app'
-  // },
-  // {
-  //   icon: 'https://mp.acexiamo.com/logo.png',
-  //   name: '微信公众号AI排版工具',
-  //   url: 'https://mp.acexiamo.com'
-  // },
-  // {
-  //   icon: 'https://imagify.acexiamo.com/logo.png',
-  //   name: 'Gemini Image Generator',
-  //   url: 'https://imagify.acexiamo.com'
-  // },
-  // {
-  //   icon: 'https://nomika.dev/logo.png',
-  //   name: 'Nomika',
-  //   url: 'https://nomika.dev'
-  // },
   {
     icon: 'https://mbti.acexiamo.com/logo.png',
     name: 'Mindly',
@@ -202,11 +185,6 @@ const products = [
     name: 'Nexion',
     url: 'https://nexion.acexiamo.com'
   },
-  // {
-  //   icon: 'https://qwq.wiki/_nuxt/avatar.eab7fd22.avif',
-  //   name: 'Vtuber site',
-  //   url: 'https://qwq.wiki'
-  // },
 ]
 
 function Products() {
@@ -223,7 +201,7 @@ function Products() {
         {products.map((product, index) => (
           <div 
             key={index}
-            class="group flex items-center gap-[8px] px-[12px] py-[7px] rounded-[6px]
+            class="product-card group flex items-center gap-[8px] px-[12px] py-[7px] rounded-[6px]
                   bg-white/5 dark:bg-black/5 
                   border border-dashed border-gray-300/50 dark:border-gray-600/50
                   hover:border-violet-500/70 dark:hover:border-violet-400/70 
@@ -262,47 +240,21 @@ function WakaTime() {
   )
 }
 
+function SocialIcon({ name, url }: { name: string; url: string }) {
+  return (
+    <icon
+      name={name}
+      class="text-[25px] social-icon cursor-pointer"
+      onClick={() => to(url)}
+    />
+  )
+}
+
 function Another() {
   return (
     <div class="items-center flex gap-[15px] mt-[10px]">
-      <icon
-        name="logos:github-octocat"
-        class="text-[25px]"
-        onClick={() => to('https://github.com/AceXiamo')}
-        onMouseenter={(e: Event) => {
-          gsap.to(e.currentTarget, {
-            duration: 0.3,
-            scale: 1.3,
-            ease: 'back.out(5)',
-          })
-        }}
-        onMouseleave={(e: Event) => {
-          gsap.to(e.currentTarget, {
-            duration: 0.3,
-            scale: 1,
-            ease: 'back.out(5)',
-          })
-        }}
-      />
-      <icon
-        name="logos:twitter"
-        class="text-[25px]"
-        onClick={() => to('https://twitter.com/AceXiamo')}
-        onMouseenter={(e: Event) => {
-          gsap.to(e.currentTarget, {
-            duration: 0.3,
-            scale: 1.3,
-            ease: 'back.out(5)',
-          })
-        }}
-        onMouseleave={(e: Event) => {
-          gsap.to(e.currentTarget, {
-            duration: 0.3,
-            scale: 1,
-            ease: 'back.out(5)',
-          })
-        }}
-      />
+      <SocialIcon name="logos:github-octocat" url="https://github.com/AceXiamo" />
+      <SocialIcon name="logos:twitter" url="https://twitter.com/AceXiamo" />
     </div>
   )
 }
@@ -317,15 +269,12 @@ function Blog() {
       <span>{i18n.t('index.line_6_1')}</span>
       <div
         class="text-[14px] cursor-pointer text-blue-400 dark:text-blue-300 relative flex justify-center wave_line screenshot_item"
-        onMouseenter={(e: Event) => {}}
-        onMouseleave={(e: Event) => {}}
         style={{
           backgroundImage: `url(${Wave})`,
         }}
         onClick={() => to('https://axm.moe')}
       >
         <span>{i18n.t('index.line_6_2')}</span>
-        {/* site screenshot */}
         <div class="site_screenshot absolute bottom-0 translate-y-full">
           <img src={Screenshot} class="w-[260px]" />
         </div>
@@ -362,24 +311,54 @@ const arr = [
   <WakaTime />,
 ]
 
-const getGsapConfig = (index: number) => {
-  return {
-    method: 'from',
-    config: {
-      opacity: 0,
-      x: -25,
-      delay: index * 0.05,
-      ease: 'back(5)',
-    },
-  }
-}
-
 const to = (path: string) => {
   window.open(path, '_blank')
 }
 
+let ctx: gsap.Context | null = null
+
+const initAnimations = () => {
+  ctx = gsap.context(() => {
+    const items = gsap.utils.toArray<HTMLElement>('.gsap-item')
+    if (!items.length) return
+
+    gsap.from(items, {
+      autoAlpha: 0,
+      x: -25,
+      duration: 0.4,
+      ease: 'back.out(2)',
+      stagger: 0.06,
+    })
+
+    const socialIcons = gsap.utils.toArray<HTMLElement>('.social-icon')
+    socialIcons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        gsap.to(icon, { scale: 1.3, duration: 0.3, ease: 'back.out(3)' })
+      })
+      icon.addEventListener('mouseleave', () => {
+        gsap.to(icon, { scale: 1, duration: 0.3, ease: 'back.out(3)' })
+      })
+    })
+
+    const productCards = gsap.utils.toArray<HTMLElement>('.product-card')
+    productCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { y: -2, scale: 1.02, duration: 0.25, ease: 'power2.out' })
+      })
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { y: 0, scale: 1, duration: 0.25, ease: 'power2.out' })
+      })
+    })
+  }, contentRef.value)
+}
+
 onMounted(() => {
   loadLowerImgInSiteInit()
+  nextTick(initAnimations)
+})
+
+onUnmounted(() => {
+  ctx?.revert()
 })
 </script>
 

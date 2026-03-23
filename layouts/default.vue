@@ -2,6 +2,7 @@
   <div class="flex flex-col">
     <div
       class="mt-[30px] w-full flex items-center justify-end relative box-border lg:px-[200px] lt-lg:px-[20px]"
+      ref="headerRef"
     >
       <div
         class="absolute lg:left-[200px] lt-lg:left-[20px] lg:w-[50px] lg:h-[50px] lt-lg:w-[40px] lt-lg:h-[40px]"
@@ -9,13 +10,13 @@
       ></div>
       <MenuBar :active="active" />
       <div
-        class="lg:ml-[50px] lt-lg:ml-[10px] text-black dark:text-white w-[30px] h-[30px] rounded-[5px] flex transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
+        class="header-btn lg:ml-[50px] lt-lg:ml-[10px] text-black dark:text-white w-[30px] h-[30px] rounded-[5px] flex transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
         @click="toggleTheme"
       >
         <icon name="heroicons:light-bulb" class="m-auto" />
       </div>
       <div
-        class="ml-[10px] w-[30px] h-[30px] text-black flex dark:text-white rounded-[5px] transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
+        class="header-btn ml-[10px] w-[30px] h-[30px] text-black flex dark:text-white rounded-[5px] transition-all duration-300 hover:bg-black/20 hover:dark:bg-white/20 cursor-pointer"
         @click="toggleLanguage"
       >
         <icon name="bi:translate" class="m-auto" />
@@ -26,12 +27,14 @@
 </template>
 
 <script lang="tsx" setup>
+import gsap from 'gsap'
 import light from '~/utils/light';
 
 const i18n = useI18n()
 const route = useRoute()
 const active = computed(() => route.name?.toString())
 const colorMode = useColorMode()
+const headerRef = ref<HTMLElement>()
 
 if (!import.meta.dev) {
   useHead({
@@ -58,6 +61,8 @@ const toggleLanguage = () => {
   i18n.setLocale(target)
 }
 
+let ctx: gsap.Context | null = null
+
 onMounted(() => {
   if (navigator.language == 'zh-CN') {
     i18n.setLocale('zh')
@@ -66,6 +71,30 @@ onMounted(() => {
   }
 
   light.generate()
+
+  ctx = gsap.context(() => {
+    gsap.from('.header-btn', {
+      autoAlpha: 0,
+      y: -10,
+      duration: 0.3,
+      ease: 'power2.out',
+      stagger: 0.08,
+    })
+
+    const btns = gsap.utils.toArray<HTMLElement>('.header-btn')
+    btns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        gsap.to(btn, { scale: 1.1, duration: 0.2, ease: 'back.out(3)' })
+      })
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' })
+      })
+    })
+  }, headerRef.value)
+})
+
+onUnmounted(() => {
+  ctx?.revert()
 })
 
 const toggleTheme = (e: MouseEvent) => {
@@ -87,7 +116,6 @@ const toggleTheme = (e: MouseEvent) => {
         {
           duration: 500,
           easing: 'ease-in',
-          // 指定要附加动画的伪元素
           pseudoElement: '::view-transition-new(color_theme)',
         },
       )
@@ -107,12 +135,6 @@ const menu = [
     path: '/',
     icon: 'heroicons:home',
   },
-  // {
-  //   title: 'Say',
-  //   name: 'say',
-  //   path: '/say',
-  //   icon: 'heroicons:chat-bubble-bottom-center-text',
-  // },
   {
     title: 'menu.doing',
     name: 'doing',
@@ -125,24 +147,6 @@ const menu = [
     path: '/photo',
     icon: 'heroicons:photo-solid',
   },
-  // {
-  //   title: 'Blog',
-  //   name: 'blog',
-  //   path: 'https://axm.moe',
-  //   icon: 'heroicons:puzzle-piece',
-  // },
-  // {
-  //   title: 'Toy',
-  //   name: 'toy',
-  //   path: '/toy',
-  //   icon: 'heroicons:puzzle-piece',
-  // },
-  // {
-  //   title: 'About',
-  //   name: 'about',
-  //   path: '/about',
-  //   icon: 'heroicons:window-solid',
-  // },
 ]
 
 function MenuBar({ active }: { active?: string }) {
@@ -150,7 +154,7 @@ function MenuBar({ active }: { active?: string }) {
     <div class="flex w-max p-[10px] rounded-md lg:gap-[50px] lt-lg:gap-[20px]">
       {menu.map(item => (
         <div
-          class="flex items-center gap-[5px] lg:text-[16px] lt-lg:text-[15px] cursor-pointer text-black dark:text-white relative group"
+          class="menu-item flex items-center gap-[5px] lg:text-[16px] lt-lg:text-[15px] cursor-pointer text-black dark:text-white relative group"
           onClick={() => to(item.path)}
         >
           <icon name={item.icon} />

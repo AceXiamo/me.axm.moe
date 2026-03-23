@@ -7,6 +7,7 @@
 <script lang="tsx" setup>
 import { render } from 'vue'
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 import { images } from '@/utils/photo'
 import imageViewer from '~/utils/imageViewer'
 import BuncingBall from '~/assets/images/buncing-ball.svg'
@@ -18,7 +19,7 @@ let imageContainer: null | HTMLElement = null,
   lineArr: number[] = [],
   mdImages: string[] = [],
   rowNum = 3,
-  imageNodes: Node[] = []
+  imageNodes: HTMLElement[] = []
 
 onMounted(() => {
   rowNum = window.innerWidth < 992 ? 2 : 3
@@ -36,24 +37,30 @@ onMounted(() => {
     initImage()
   }
 
-  // listen window resize
-  window.addEventListener('resize', () => {
-    rowNum = window.innerWidth < 992 ? 2 : 3
-    widthOfImage = (imageContainer!.offsetWidth - gap * (rowNum - 1)) / rowNum
-    lineArr = []
-    imageNodes.forEach((node, index) => {
-      const element = node as HTMLElement
-      const withRowNum = index % rowNum
-      element.style.width = `${widthOfImage}px`
-      element.style.left = `${withRowNum * (widthOfImage + gap)}px`
-      element.style.top = `${lineArr[withRowNum] || 0}px`
-      const img = element.querySelector('img') as HTMLImageElement
-      const height = img.height * (widthOfImage / img.width)
-      lineArr[withRowNum] = (lineArr[withRowNum] || 0) + height + gap
-      imageContainer!.style.height = `${Math.max(...lineArr)}px`
-    })
-  })
+  window.addEventListener('resize', handleResize)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  ScrollTrigger.getAll().forEach(t => t.kill())
+})
+
+const handleResize = () => {
+  rowNum = window.innerWidth < 992 ? 2 : 3
+  widthOfImage = (imageContainer!.offsetWidth - gap * (rowNum - 1)) / rowNum
+  lineArr = []
+  imageNodes.forEach((node, index) => {
+    const withRowNum = index % rowNum
+    node.style.width = `${widthOfImage}px`
+    node.style.left = `${withRowNum * (widthOfImage + gap)}px`
+    node.style.top = `${lineArr[withRowNum] || 0}px`
+    const img = node.querySelector('img') as HTMLImageElement
+    const height = img.height * (widthOfImage / img.width)
+    lineArr[withRowNum] = (lineArr[withRowNum] || 0) + height + gap
+    imageContainer!.style.height = `${Math.max(...lineArr)}px`
+  })
+  ScrollTrigger.refresh()
+}
 
 const initImage = () => {
   mdImages.forEach((url, index) => {
@@ -63,15 +70,10 @@ const initImage = () => {
     div.style.width = `${widthOfImage}px`
     div.style.position = 'absolute'
     div.style.left = `${withRowNum * (widthOfImage + gap)}px`
+    div.classList.add('photo-item')
     imageNodes.push(div)
 
-    gsap.from(div, {
-      opacity: 0,
-      y: 50,
-      duration: 0.5,
-      delay: index * 0.15,
-      scrollTrigger: div,
-    })
+    gsap.set(div, { autoAlpha: 0, y: 40 })
 
     const img = new Image()
     img.src = url
@@ -80,16 +82,36 @@ const initImage = () => {
       div.style.top = `${lineArr[withRowNum] || 0}px`
       lineArr[withRowNum] = (lineArr[withRowNum] || 0) + height + gap
       imageContainer!.style.height = `${Math.max(...lineArr)}px`
+      ScrollTrigger.refresh()
     }
     render(<ImageNode src={url} index={index} />, div)
   })
   imageContainer!.append(...imageNodes)
+
+  ScrollTrigger.batch('.photo-item', {
+    onEnter: (elements) => {
+      gsap.to(elements, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        stagger: 0.1,
+        overwrite: true,
+      })
+    },
+    start: 'top 90%',
+    once: true,
+  })
 }
 
 function ImageNode({ src, index }: { src: string; index: number }) {
   return (
-    <div class="flex relative">
-      <img src={src} class="w-full h-full rounded-sm" onClick={(e: Event) => handleView(index, e)} />
+    <div class="flex relative overflow-hidden rounded-sm group cursor-pointer">
+      <img
+        src={src}
+        class="w-full h-full transition-transform duration-500 group-hover:scale-105"
+        onClick={(e: Event) => handleView(index, e)}
+      />
     </div>
   )
 }
@@ -105,19 +127,15 @@ const handleView = (index: number, e: Event) => {
     div.style.inset = '0'
     parent.append(div)
     render(<ImageLoading />, div)
-    gsap.from(div, {
-      opacity: 0,
-      y: 20,
-      duration: 0.2,
-    })
+    gsap.from(div, { autoAlpha: 0, duration: 0.2 })
+
     const img = new Image()
     img.src = images.value[index].url
     Promise.all([sleep(1000), img.onload]).then(() => {
       images.value[index].full_loaded = true
       gsap.to(div, {
-        opacity: 0,
-        y: 20,
-        duration: 0.1,
+        autoAlpha: 0,
+        duration: 0.15,
         onComplete: () => {
           imageViewer.show(images.value[index].url, e)
           div.remove()

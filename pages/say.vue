@@ -6,22 +6,11 @@
         class="w-[700px] rounded-md"
       />
     </div>
-    <div class="w-[700px] flex flex-col gap-[100px] mt-[100px]">
+    <div class="w-[700px] flex flex-col gap-[100px] mt-[100px]" ref="chatList">
       <template v-for="item in data?.post_data">
-        <ChatItem
-          :item="item"
-          v-gsap="{
-            method: 'from',
-            config: {
-              opacity: 0,
-              x: -50,
-              duration: .5,
-              ease: 'back(5)',
-              autoAlpha: 0,
-              scrollTrigger: true,
-            },
-          }"
-        />
+        <div class="chat-item">
+          <ChatItem :item="item" />
+        </div>
       </template>
     </div>
   </div>
@@ -29,16 +18,43 @@
 
 <script lang="tsx" setup>
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 import Avatar from '~/assets/images/avatar.png'
 
-const cover = ref()
+const cover = ref<HTMLElement>()
+const chatList = ref<HTMLElement>()
 const page = ref(0)
 
+let ctx: gsap.Context | null = null
+
 onMounted(() => {
-  gsap.from(cover.value, {
-    duration: 0.5,
-    opacity: 0,
+  gsap.from(cover.value!, {
+    autoAlpha: 0,
+    scale: 0.98,
+    duration: 0.6,
+    ease: 'power2.out',
   })
+
+  ctx = gsap.context(() => {
+    ScrollTrigger.batch('.chat-item', {
+      onEnter: (elements) => {
+        gsap.from(elements, {
+          autoAlpha: 0,
+          x: -30,
+          duration: 0.5,
+          ease: 'back.out(1.5)',
+          stagger: 0.1,
+          overwrite: true,
+        })
+      },
+      start: 'top 85%',
+      once: true,
+    })
+  }, chatList.value)
+})
+
+onUnmounted(() => {
+  ctx?.revert()
 })
 
 function ChatItem({ item }: { item: PostDataItem }) {

@@ -3,47 +3,13 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-type GsapDirectiveValue = { method: 'from' | 'to'; config: gsap.TweenVars }
-type GsapMethod = 'from' | 'to'
-type GsapAttr = 'initial' | 'enter' | 'leave' | 'hovered' | 'tapped' | 'focused'
-type GsapProp = {
-  [key in GsapAttr]?: gsap.TweenVars
-}
-
-// declare module "@vue/runtime-core" {
-//   export interface ComponentCustomProperties {
-//     $gsap?: GsapDirectiveValue;
-//   }
-// }
-
-declare module '@vue/runtime-dom' {
-  interface HTMLAttributes {
-    initial?: gsap.TweenVars & { duration?: number }
-    enter?: gsap.TweenVars
-    leave?: gsap.TweenVars
-    hovered?: gsap.TweenVars
-    tapped?: gsap.TweenVars
-    focused?: gsap.TweenVars
-  }
-}
-
-declare module 'vue' {
-  interface ComponentCustomProperties {
-    vGsap: (option: GsapDirectiveValue) => void
-  }
-}
+gsap.defaults({
+  duration: 0.5,
+  ease: 'power2.out',
+})
 
 export default defineNuxtPlugin(nuxtApp => {
-  nuxtApp.vueApp.directive('gsap', {
-    mounted(el, binding, vnode) {
-      const { method, config } = binding.value as GsapDirectiveValue
-      if (config.scrollTrigger) {
-        config.scrollTrigger = el
-      }
-      gsap[method](el, config)
-    },
-    getSSRProps(binding) {
-      return {}
-    },
+  nuxtApp.hook('page:transition:finish', () => {
+    ScrollTrigger.refresh()
   })
 })
